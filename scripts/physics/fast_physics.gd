@@ -52,12 +52,21 @@ static func simulate_stroke(
 	# Build wall segment list and circle obstacles from hole data
 	var walls   := _collect_walls(hole)
 	var circles := _collect_circles(hole)
+	var ramps   := _collect_ramps(hole)
 
 	for step in range(MAX_STEPS):
 		if vel.length() < STOP_SPEED:
 			break
 
 		vel *= FRICTION
+
+		# Ramp zones: apply downhill gravity acceleration (g·sin θ per step)
+		for ramp in ramps:
+			if _point_in_ramp(pos, ramp):
+				var accel: float = 9.8 * sin(deg_to_rad(ramp["slope_angle"])) * STEP_DT
+				vel += ramp["slope_dir"] * accel
+				break
+
 		var next_pos := pos + vel * STEP_DT
 
 		# Wall collision
@@ -92,10 +101,12 @@ static func simulate_stroke(
 # ── Wall geometry ─────────────────────────────────────────────────────────────
 
 ## Returns a flat list of wall segments as pairs of Vector2 endpoints.
+## Excludes cylinders and ramps (handled separately).
 static func _collect_walls(hole: HoleData) -> Array:
 	var walls := []
 	for item in hole.obstacles:
-		if item.get("type", "wall") != "cylinder":
+		var t: String = item.get("type", "wall")
+		if t != "cylinder" and t != "ramp":
 			walls.append_array(_box_to_segments(item["pos"], item["size"], item["rot_y"]))
 	for item in hole.boundary_walls:
 		walls.append_array(_box_to_segments(item["pos"], item["size"], item["rot_y"]))
@@ -112,6 +123,33 @@ static func _collect_circles(hole: HoleData) -> Array:
 				"radius": float(item.get("radius", 0.5)),
 			})
 	return circles
+
+## Returns ramp zones as Array of { center, half_w, half_d, rot_y, slope_angle, slope_dir }.
+static func _collect_ramps(hole: HoleData) -> Array:
+	var ramps := []
+	for item in hole.obstacles:
+		if item.get("type", "") == "ramp":
+			var p: Vector3 = item["pos"]
+			var s: Vector3 = item.get("size", Vector3(2.0, 0.05, 2.0))
+			var sd: Vector2 = item.get("slope_dir", Vector2(0.0, 1.0))
+			ramps.append({
+				"center":      Vector2(p.x, p.z),
+				"half_w":      s.x * 0.5,
+				"half_d":      s.z * 0.5,
+				"rot_y":       deg_to_rad(float(item.get("rot_y", 0.0))),
+				"slope_angle": float(item.get("slope_angle", 15.0)),
+				"slope_dir":   sd.normalized(),
+			})
+	return ramps
+
+## Returns true when pos (XZ) is inside the ramp's rotated footprint.
+static func _point_in_ramp(pos: Vector2, ramp: Dictionary) -> bool:
+	var center: Vector2 = ramp["center"]
+	var local := pos - center
+	var angle: float    = ramp["rot_y"]
+	var lx: float = local.x * cos(-angle) - local.y * sin(-angle)
+	var ly: float = local.x * sin(-angle) + local.y * cos(-angle)
+	return abs(lx) <= ramp["half_w"] and abs(ly) <= ramp["half_d"]
 
 ## Convert a box (3D position/size/rot_y) to four 2D wall segments.
 static func _box_to_segments(pos: Vector3, size: Vector3, rot_y: float) -> Array:

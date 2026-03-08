@@ -99,7 +99,7 @@ Save custom holes to `user://holes/` via `SaveLoad.save_hole()`.
 
 ## Roadmap
 
-- [ ] Ramp / slope support (Phase 2)
+- [x] Ramp / slope support (Phase 2) — `"ramp"` obstacle type with visual tilt + headless gravity acceleration
 - [ ] In-engine hole editor (Phase 2)
 - [ ] Heatmap overlay from simulation paths (Phase 3)
 - [ ] Multiple-hole course layout (Phase 3)

@@ -61,6 +61,16 @@ static func from_dict(d: Dictionary) -> HoleData:
 				"height": float(obs.get("height", 1.0)),
 				"role":   obs.get("role", ""),
 			})
+		elif obs_type == "ramp":
+			var sd = obs.get("slope_dir", [0.0, 1.0])
+			h.obstacles.append({
+				"type":        obs_type,
+				"pos":         _vec3(obs.get("pos", [0, 0, 0])),
+				"size":        _vec3(obs.get("size", [2.0, 0.05, 2.0])),
+				"rot_y":       float(obs.get("rot_y", 0.0)),
+				"slope_angle": float(obs.get("slope_angle", 15.0)),
+				"slope_dir":   Vector2(float(sd[0]), float(sd[1])),
+			})
 		else:
 			h.obstacles.append({
 				"type":  obs_type,
@@ -96,12 +106,21 @@ func to_dict() -> Dictionary:
 			"rot_y":  seg["rot_y"],
 		})
 	for obs in obstacles:
-		d["obstacles"].append({
-			"type":  obs["type"],
-			"pos":   _vec3_arr(obs["pos"]),
-			"size":  _vec3_arr(obs["size"]),
-			"rot_y": obs["rot_y"],
-		})
+		var obs_out: Dictionary = {"type": obs["type"], "pos": _vec3_arr(obs["pos"])}
+		match obs["type"]:
+			"cylinder":
+				obs_out["radius"] = obs["radius"]
+				obs_out["height"] = obs["height"]
+				obs_out["role"]   = obs["role"]
+			"ramp":
+				obs_out["size"]        = _vec3_arr(obs["size"])
+				obs_out["rot_y"]       = obs["rot_y"]
+				obs_out["slope_angle"] = obs["slope_angle"]
+				obs_out["slope_dir"]   = [obs["slope_dir"].x, obs["slope_dir"].y]
+			_:
+				obs_out["size"]  = _vec3_arr(obs["size"])
+				obs_out["rot_y"] = obs["rot_y"]
+		d["obstacles"].append(obs_out)
 	for bw in boundary_walls:
 		d["boundary_walls"].append({
 			"pos":   _vec3_arr(bw["pos"]),

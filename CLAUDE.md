@@ -39,6 +39,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `"cylinder"` — for volcano etc. (keys: `pos`, `radius`, `height`, `role`)
   - Roles: `"volcano_base"`, `"volcano_peak"` — controls colour in HoleBuilder
   - In FastPhysics: approximated as circle collision in 2D
+- `"ramp"` — sloped accelerator (keys: `pos`, `size`, `rot_y`, `slope_angle`, `slope_dir`)
+  - `slope_angle`: degrees of incline (e.g. `14.0`)
+  - `slope_dir`: 2-element array `[x, z]` pointing **downhill** (normalised at runtime)
+  - In HoleBuilder: tilted sandy-timber box — mesh + collision rotated by `slope_angle` around local X
+  - In FastPhysics: XZ footprint acts as gravity zone — `vel += slope_dir * g·sin(θ) * dt` each step
 
 ### Camera system
 Two cameras in `hole_scene.tscn`: `OverviewCamera` (default, top-down angled) and `FollowCamera` (low behind-ball, updated each frame in `_process`). Toggle with `C`.

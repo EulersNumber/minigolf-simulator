@@ -10,6 +10,7 @@ const COLOR_BOUNDARY   := Color(0.18, 0.14, 0.10)   # darker rock
 const COLOR_CUP        := Color(0.04, 0.04, 0.04)
 const COLOR_TEE        := Color(0.90, 0.85, 0.20)   # yellow marker
 const COLOR_LAVA_FLOOR := Color(0.90, 0.25, 0.05)   # lava orange (hazard tiles)
+const COLOR_RAMP       := Color(0.72, 0.62, 0.45)   # sandy timber ramp
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 
@@ -62,6 +63,17 @@ static func _build_obstacles(parent: Node3D, items: Array[Dictionary]) -> void:
 				"obstacle_%d" % i
 			)
 			body.add_to_group("obstacle")
+			container.add_child(body)
+		elif obstacle_type == "ramp":
+			var body := _static_ramp(
+				item.get("pos", Vector3.ZERO),
+				item.get("size", Vector3(2.0, 0.05, 2.0)),
+				float(item.get("rot_y", 0.0)),
+				float(item.get("slope_angle", 15.0)),
+				"obstacle_%d" % i
+			)
+			body.add_to_group("obstacle")
+			body.add_to_group("ramp")
 			container.add_child(body)
 		else:
 			var body := _static_box(
@@ -217,6 +229,33 @@ static func _static_cylinder(
 	cyl_shape.radius = radius
 	cyl_shape.height = height
 	col.shape = cyl_shape
+	body.add_child(col)
+
+	return body
+
+## Build a ramp: a box tilted by slope_angle degrees around its local X axis.
+## The high end faces -Z in local space; slope_dir in XZ sets the downhill direction.
+static func _static_ramp(
+	pos: Vector3, size: Vector3, rot_y_deg: float, slope_angle_deg: float, node_name: String
+) -> StaticBody3D:
+	var body := StaticBody3D.new()
+	body.name = node_name
+	body.position = pos
+	body.rotation_degrees.y = rot_y_deg
+
+	var mesh_inst := MeshInstance3D.new()
+	var box := BoxMesh.new()
+	box.size = size
+	mesh_inst.mesh = box
+	mesh_inst.material_override = _flat_material(COLOR_RAMP)
+	mesh_inst.rotation_degrees.x = -slope_angle_deg
+	body.add_child(mesh_inst)
+
+	var col := CollisionShape3D.new()
+	var box_shape := BoxShape3D.new()
+	box_shape.size = size
+	col.shape = box_shape
+	col.rotation_degrees.x = -slope_angle_deg
 	body.add_child(col)
 
 	return body
