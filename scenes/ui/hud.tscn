@@ -6,74 +6,86 @@
 script = ExtResource("1_hud")
 layer = 10
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -860.0
-offset_bottom = -400.0
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 1
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 220.0
+offset_bottom = 420.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBox" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
-[node name="HoleName" type="Label" parent="MarginContainer/VBox"]
+[node name="PlayerLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
-text = "Hole: —"
+text = "Player"
 theme_override_font_sizes/font_size = 18
 
-[node name="ParLabel" type="Label" parent="MarginContainer/VBox"]
+[node name="ParLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
 text = "Par: —"
 
-[node name="StrokeLabel" type="Label" parent="MarginContainer/VBox"]
+[node name="StrokeLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
 text = "Strokes: 0"
 
-[node name="HSep" type="HSeparator" parent="MarginContainer/VBox"]
+[node name="HSep" type="HSeparator" parent="Panel/VBox"]
 layout_mode = 2
 
-[node name="PowerLabel" type="Label" parent="MarginContainer/VBox"]
+[node name="PowerLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
 text = "Power:"
 
-[node name="PowerBar" type="ProgressBar" parent="MarginContainer/VBox"]
+[node name="PowerBar" type="ProgressBar" parent="Panel/VBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(180, 14)
 max_value = 100.0
 value = 50.0
 
-[node name="HSep2" type="HSeparator" parent="MarginContainer/VBox"]
+[node name="HSep2" type="HSeparator" parent="Panel/VBox"]
 layout_mode = 2
 
-[node name="StatusLabel" type="Label" parent="MarginContainer/VBox"]
+[node name="StatusLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
-text = "Click and drag to aim a shot."
+text = "Drag to aim."
 autowrap_mode = 3
-custom_minimum_size = Vector2(180, 40)
+custom_minimum_size = Vector2(180, 48)
 
-[node name="HSep3" type="HSeparator" parent="MarginContainer/VBox"]
+[node name="HSep3" type="HSeparator" parent="Panel/VBox"]
 layout_mode = 2
 
-[node name="ResetButton" type="Button" parent="MarginContainer/VBox"]
+[node name="ResetButton" type="Button" parent="Panel/VBox"]
 layout_mode = 2
-text = "Reset Ball (R)"
+text = "Reset Ball  (R)"
 
-[node name="SimLabel" type="Label" parent="MarginContainer/VBox"]
+[node name="HelpButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "? How to Play"
+
+[node name="StandingsButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Standings"
+
+[node name="HSep4" type="HSeparator" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="SimLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
 text = "Simulate rounds:"
+visible = false
 
-[node name="RoundsSpin" type="SpinBox" parent="MarginContainer/VBox"]
+[node name="RoundsSpin" type="SpinBox" parent="Panel/VBox"]
 layout_mode = 2
 min_value = 10.0
 max_value = 5000.0
 step = 10.0
 value = 500.0
+visible = false
 
-[node name="SimButton" type="Button" parent="MarginContainer/VBox"]
+[node name="SimButton" type="Button" parent="Panel/VBox"]
 layout_mode = 2
 text = "Run Simulation"
-
-[node name="AimIndicator" type="Node2D" parent="."]
+visible = false

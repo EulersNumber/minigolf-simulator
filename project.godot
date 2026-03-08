@@ -8,6 +8,10 @@
 
 config_version=5
 
+[autoload]
+
+GameState="*res://scripts/core/game_state.gd"
+
 [animation]
 
 compatibility/default_parent_skeleton_in_mesh_instance_3d=true
@@ -16,7 +20,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Minigolf Simulator"
 config/description="A minigolf course design sandbox for prototyping and analyzing hole difficulty."
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

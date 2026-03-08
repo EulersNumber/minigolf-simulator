@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://cyfqbvryagq1m"]
+
+[ext_resource type="Script" path="res://scripts/ui/help_overlay.gd" id="1_help"]
+
+[node name="HelpOverlay" type="CanvasLayer"]
+script = ExtResource("1_help")
+layer = 25
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -240.0
+offset_right = 200.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBox"]
+layout_mode = 2
+text = "How to Play"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+
+[node name="HSep" type="HSeparator" parent="PanelContainer/VBox"]
+layout_mode = 2
+
+[node name="ControlsLabel" type="Label" parent="PanelContainer/VBox"]
+layout_mode = 2
+text = "Controls:
+  Drag mouse    Aim & set power
+  Release       Fire shot
+  R             Reset ball to tee
+  C             Toggle camera
+  ESC           Main menu"
+
+[node name="HSep2" type="HSeparator" parent="PanelContainer/VBox"]
+layout_mode = 2
+
+[node name="ScoringLabel" type="Label" parent="PanelContainer/VBox"]
+layout_mode = 2
+text = "Scoring:
+  -3  Albatross
+  -2  Eagle
+  -1  Birdie
+   0  Par
+  +1  Bogey
+  +2  Double Bogey"
+
+[node name="HSep3" type="HSeparator" parent="PanelContainer/VBox"]
+layout_mode = 2
+
+[node name="TipLabel" type="Label" parent="PanelContainer/VBox"]
+layout_mode = 2
+text = "Tip: Aim LEFT of the volcano for the
+easier path to the cup!"
+autowrap_mode = 3
+
+[node name="CloseButton" type="Button" parent="PanelContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+text = "Close"

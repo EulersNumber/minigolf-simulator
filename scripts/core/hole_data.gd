@@ -52,12 +52,22 @@ static func from_dict(d: Dictionary) -> HoleData:
 		})
 
 	for obs in d.get("obstacles", []):
-		h.obstacles.append({
-			"type":  obs.get("type", "wall"),
-			"pos":   _vec3(obs.get("pos", [0, 0, 0])),
-			"size":  _vec3(obs.get("size", [0.2, 0.5, 1.0])),
-			"rot_y": float(obs.get("rot_y", 0.0)),
-		})
+		var obs_type: String = obs.get("type", "wall")
+		if obs_type == "cylinder":
+			h.obstacles.append({
+				"type":   obs_type,
+				"pos":    _vec3(obs.get("pos", [0, 0, 0])),
+				"radius": float(obs.get("radius", 0.5)),
+				"height": float(obs.get("height", 1.0)),
+				"role":   obs.get("role", ""),
+			})
+		else:
+			h.obstacles.append({
+				"type":  obs_type,
+				"pos":   _vec3(obs.get("pos", [0, 0, 0])),
+				"size":  _vec3(obs.get("size", [0.2, 0.5, 1.0])),
+				"rot_y": float(obs.get("rot_y", 0.0)),
+			})
 
 	for bw in d.get("boundary_walls", []):
 		h.boundary_walls.append({

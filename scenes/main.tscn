@@ -1,15 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://main001"]
+[gd_scene format=3 uid="uid://main001"]
 
-[ext_resource type="Script"       path="res://scripts/core/main.gd"      id="1_main"]
-[ext_resource type="PackedScene"  path="res://scenes/hole/hole_scene.tscn" id="2_hole"]
-[ext_resource type="PackedScene"  path="res://scenes/ui/hud.tscn"         id="3_hud"]
-[ext_resource type="PackedScene"  path="res://scenes/ui/sim_results.tscn" id="4_results"]
+[ext_resource type="Script" uid="uid://ckv0csw7qba7f" path="res://scripts/core/main.gd" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://holescene001" path="res://scenes/hole/hole_scene.tscn" id="2_hole"]
+[ext_resource type="PackedScene" uid="uid://hud001" path="res://scenes/ui/hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hole_complete.tscn" id="4_complete"]
+[ext_resource type="PackedScene" path="res://scenes/ui/help_overlay.tscn" id="5_help"]
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" unique_id=209481883]
 script = ExtResource("1_main")
 
-[node name="HoleScene" parent="." instance=ExtResource("2_hole")]
+[node name="HoleScene" parent="." unique_id=850834346 instance=ExtResource("2_hole")]
 
-[node name="HUD" parent="." instance=ExtResource("3_hud")]
+[node name="HUD" parent="." unique_id=1966607178 instance=ExtResource("3_hud")]
 
-[node name="SimResults" parent="." instance=ExtResource("4_results")]
+[node name="HoleComplete" parent="." unique_id=15571483 instance=ExtResource("4_complete")]
+
+[node name="HelpOverlay" parent="." unique_id=1625811394 instance=ExtResource("5_help")]

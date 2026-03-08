@@ -4,39 +4,55 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Stack
 
-**Godot 4.2+ / GDScript.** Open the project in Godot: `File → Open Project → select this folder`, then press **F5** to run. There is no CLI build step.
+**Godot 4.2+ / GDScript.** Open the project in Godot: `File → Open Project → select this folder`, then press **F5** to run. No CLI build step.
 
 ## Architecture
 
-### Scene tree
-`scenes/main.tscn` → `Main` (Node3D) owns two child CanvasLayers (`HUD`, `SimResults`) and a `HoleScene` Node3D. `Main.gd` wires signals between them.
+### Scene flow
+`main_menu.tscn` (startup) → `game_setup.tscn` (New Game) or direct → `main.tscn` (game).
+`GameState` autoload (`scripts/core/game_state.gd`) carries mode + player list between scenes.
+
+### main.tscn scene tree
+`Main` (Node3D, `main.gd`) owns:
+- `HoleScene` — 3D world: geometry, ball, cameras
+- `HUD` (CanvasLayer) — player name, stroke count, power bar, buttons
+- `HoleComplete` (CanvasLayer, layer 30) — post-hole score overlay
+- `HelpOverlay` (CanvasLayer, layer 25) — ? popup
 
 ### Data flow
-1. `SaveLoad.load_hole()` reads a JSON file → `HoleData.from_dict()` → `HoleData` resource (pure data, no nodes)
-2. `HoleScene.load_hole(HoleData)` calls `HoleBuilder` to instantiate `StaticBody3D` meshes, then positions the ball
-3. For interactive play: `BallController` (wraps `RigidBody3D`) handles shot impulses and emits `stroke_ended` / `ball_holed`
-4. For simulation: `SimRunner.run(bot, hole, n)` calls `FastPhysics.simulate_stroke()` in a loop (pure GDScript, no Godot physics, ~1000× real-time)
+1. `SaveLoad.load_hole("res://data/templates/hawaii.json")` → `HoleData.from_dict()` → `HoleData`
+2. `HoleScene.load_hole(HoleData)` → `HoleBuilder.build()` instantiates StaticBody3D geometry
+3. Human turn: drag input in `HudController` → `shot_requested` signal → `HoleScene.fire_shot()` → `BallController`
+4. Bot turn: `SimRunner.run_detailed(bot, hole, 1)` (headless, instant) → `_finish_turn(strokes)`
+5. On hole: `BallController.ball_holed` → `HoleScene.hole_completed` → `Main._finish_turn()` → `HoleComplete` overlay
 
 ### Dual physics model
 | Mode | Class | When used |
 |------|-------|-----------|
-| Visual | `BallController` (`RigidBody3D`) | Interactive play |
-| Headless | `FastPhysics` (2.5D XZ point-mass) | Monte Carlo via `SimRunner` |
+| Visual | `BallController` (`RigidBody3D`, `linear_damp=2.0`) | Interactive play |
+| Headless | `FastPhysics` (2.5D XZ point-mass) | Bot simulation via `SimRunner` |
 
-`FastPhysics` constants (`FRICTION`, `RESTITUTION`, `MAX_POWER`) must stay in sync with `BallController` tuning for simulation results to be meaningful.
+`MAX_POWER` (5.0 m/s) and `FRICTION`/`RESTITUTION` must stay in sync across both.
 
-### Bot system
-`BotProfiles` defines stat tables for 3 skills × 3 styles = 9 combinations. `ShotPlanner` converts a `HoleData` + bot profile into a `(direction, power)` pair. `BotPlayer` wraps both and is the object passed to `SimRunner`.
+### Obstacle types (HoleData + HoleBuilder)
+- `"wall"` — box (keys: `pos`, `size`, `rot_y`)
+- `"cylinder"` — for volcano etc. (keys: `pos`, `radius`, `height`, `role`)
+  - Roles: `"volcano_base"`, `"volcano_peak"` — controls colour in HoleBuilder
+  - In FastPhysics: approximated as circle collision in 2D
 
-### Hole data format
-`HoleData` is a `Resource` with `floor_segments`, `obstacles`, and `boundary_walls` arrays of Dictionaries (keys: `center`/`pos`, `size`, `rot_y`). Templates live in `data/templates/*.json`. Custom holes save to `user://holes/` via `SaveLoad.save_hole()`.
+### Camera system
+Two cameras in `hole_scene.tscn`: `OverviewCamera` (default, top-down angled) and `FollowCamera` (low behind-ball, updated each frame in `_process`). Toggle with `C`.
 
-## Key keyboard shortcuts (runtime)
+### Turn management (multi-player)
+`GameState` holds `players` array and `current_player_index`. `Main._start_current_turn()` reads the current player; if `is_bot=true` it runs `SimRunner` instantly; otherwise waits for human input. After hole, `GameState.record_score_and_advance()` steps to next player.
 
+### Active course
+Only `hawaii.json` ("Volcanic Approach", par 4) is used. Other templates remain in `data/templates/` but are not loaded.
+
+## Key runtime controls
 | Key | Action |
 |-----|--------|
-| `1–4` | Load built-in template hole |
-| `G` | Generate procedural hole |
-| `R` | Reset ball to tee |
-
-Drag on the viewport to aim and set power; release to fire.
+| Drag + release | Aim and fire |
+| `R` | Reset ball |
+| `C` | Toggle overview / follow camera |
+| `ESC` | Main menu |

@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://gamesetup001"]
+
+[ext_resource type="Script" path="res://scripts/ui/game_setup.gd" id="1_setup"]
+
+[node name="GameSetup" type="Node"]
+script = ExtResource("1_setup")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.22, 0.07, 1.0)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(480, 0)
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+text = "New Game"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 30
+
+[node name="HSep" type="HSeparator" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+
+[node name="ModeLabel" type="Label" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+text = "Game Mode:"
+
+[node name="ModeOption" type="OptionButton" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+
+[node name="BotSection" type="VBoxContainer" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BotCountLabel" type="Label" parent="CenterContainer/Panel/VBox/BotSection"]
+layout_mode = 2
+text = "Number of Bots (1-4):"
+
+[node name="BotCountSpin" type="SpinBox" parent="CenterContainer/Panel/VBox/BotSection"]
+layout_mode = 2
+min_value = 1.0
+max_value = 4.0
+value = 1.0
+
+[node name="BotSkillLabel" type="Label" parent="CenterContainer/Panel/VBox/BotSection"]
+layout_mode = 2
+text = "Bot Skill:"
+
+[node name="BotSkillOption" type="OptionButton" parent="CenterContainer/Panel/VBox/BotSection"]
+layout_mode = 2
+
+[node name="BotStyleLabel" type="Label" parent="CenterContainer/Panel/VBox/BotSection"]
+layout_mode = 2
+text = "Bot Style:"
+
+[node name="BotStyleOption" type="OptionButton" parent="CenterContainer/Panel/VBox/BotSection"]
+layout_mode = 2
+
+[node name="LocalSection" type="VBoxContainer" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+visible = false
+theme_override_constants/separation = 8
+
+[node name="PlayerNamesLabel" type="Label" parent="CenterContainer/Panel/VBox/LocalSection"]
+layout_mode = 2
+text = "Player Names:"
+
+[node name="PlayerList" type="VBoxContainer" parent="CenterContainer/Panel/VBox/LocalSection"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="AddPlayerButton" type="Button" parent="CenterContainer/Panel/VBox/LocalSection"]
+layout_mode = 2
+text = "+ Add Player"
+
+[node name="HSep2" type="HSeparator" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+text = "Start Game"
+theme_override_font_sizes/font_size = 20
+
+[node name="BackButton" type="Button" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+text = "Back"

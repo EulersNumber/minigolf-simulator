@@ -1,0 +1,22 @@
+{
+	"name": "Volcanic Approach",
+	"par": 4,
+	"description": "Navigate the choke point and avoid the volcano. Left path is safer; right path is tight but worth it.",
+	"tee_position": [0.0, 0.15, 0.8],
+	"cup_position": [-0.5, 0.05, 22.5],
+	"floor_segments": [
+		{ "center": [0.0, 0.0, 12.0], "size": [4.0, 0.2, 24.0], "rot_y": 0.0 }
+	],
+	"obstacles": [
+		{ "type": "wall",     "pos": [-1.35, 0.3, 9.0],  "size": [1.3, 0.6, 0.3],  "rot_y": 0.0 },
+		{ "type": "wall",     "pos": [ 1.35, 0.3, 9.0],  "size": [1.3, 0.6, 0.3],  "rot_y": 0.0 },
+		{ "type": "cylinder", "pos": [0.7, 0.0, 18.0],   "radius": 0.9, "height": 0.7,  "role": "volcano_base" },
+		{ "type": "cylinder", "pos": [0.7, 0.55, 18.0],  "radius": 0.42, "height": 1.1, "role": "volcano_peak" }
+	],
+	"boundary_walls": [
+		{ "pos": [-2.075, 0.3, 12.0],  "size": [0.15, 0.6, 24.3], "rot_y": 0.0 },
+		{ "pos": [ 2.075, 0.3, 12.0],  "size": [0.15, 0.6, 24.3], "rot_y": 0.0 },
+		{ "pos": [0.0,    0.3, -0.075],"size": [4.3,  0.6, 0.15], "rot_y": 0.0 },
+		{ "pos": [0.0,    0.3, 24.075],"size": [4.3,  0.6, 0.15], "rot_y": 0.0 }
+	]
+}
