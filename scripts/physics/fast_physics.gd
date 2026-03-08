@@ -59,7 +59,7 @@ static func simulate_stroke(
 		var next_pos := pos + vel * STEP_DT
 
 		# Wall collision
-		var hit := _first_wall_hit(pos, next_pos, walls)
+		var hit: Variant = _first_wall_hit(pos, next_pos, walls)
 		if hit != null:
 			pos = hit["pos"]
 			vel = hit["vel"] * RESTITUTION
@@ -111,8 +111,8 @@ static func _box_to_segments(pos: Vector3, size: Vector3, rot_y: float) -> Array
 	# Rotate and translate
 	var corners: Array[Vector2] = []
 	for c in corners_local:
-		var rx := c.x * cos(angle) - c.y * sin(angle)
-		var ry := c.x * sin(angle) + c.y * cos(angle)
+		var rx: float = c.x * cos(angle) - c.y * sin(angle)
+		var ry: float = c.x * sin(angle) + c.y * cos(angle)
 		corners.append(Vector2(cx + rx, cz + ry))
 
 	# Four edges
@@ -133,7 +133,7 @@ static func _first_wall_hit(from: Vector2, to: Vector2, walls: Array):
 	for wall in walls:
 		var wa: Vector2 = wall[0]
 		var wb: Vector2 = wall[1]
-		var result := _segment_intersect(from, to, wa, wb)
+		var result: Variant = _segment_intersect(from, to, wa, wb)
 		if result != null and result["t"] < best_t:
 			best_t        = result["t"]
 			best_normal   = result["normal"]

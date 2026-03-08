@@ -47,7 +47,7 @@ static func compute(rounds: Array, par: int) -> Dictionary:
 	# Par distribution (how many rounds finished eagle/birdie/par/bogey/etc.)
 	var par_distribution := {}
 	for n in stroke_counts:
-		var diff := n - par
+		var diff: int = int(n) - par
 		var label := _par_label(diff)
 		par_distribution[label] = par_distribution.get(label, 0) + 1
 
@@ -89,9 +89,9 @@ static func format(stats: Dictionary) -> String:
 		"Score distribution:",
 	]
 	for label in ["Hole-in-one", "Eagle", "Birdie", "Par", "Bogey", "Double+", "DNF"]:
-		var count := stats["par_distribution"].get(label, 0)
+		var count: int = stats["par_distribution"].get(label, 0)
 		if count > 0:
-			var pct := count * 100.0 / stats["total_rounds"]
+			var pct: float = count * 100.0 / stats["total_rounds"]
 			lines.append("  %-14s %4d  (%5.1f%%)" % [label + ":", count, pct])
 	return "\n".join(lines)
 

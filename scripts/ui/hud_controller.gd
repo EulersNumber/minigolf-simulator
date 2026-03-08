@@ -55,7 +55,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					_fire_aimed_shot(event.position)
 
 	if _aiming and event is InputEventMouseMotion:
-		var drag := event.position - _aim_start
+		var drag := (event as InputEventMouseMotion).position - _aim_start
 		_power = clampf(drag.length() / 200.0, 0.05, 1.0)
 		power_bar.value = _power * 100.0
 

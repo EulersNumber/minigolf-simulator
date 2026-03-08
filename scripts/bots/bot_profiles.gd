@@ -53,8 +53,8 @@ const STYLE := {
 # ── Combined profile ──────────────────────────────────────────────────────────
 
 static func get_profile(skill: String, style: String) -> Dictionary:
-	var sk := SKILL.get(skill, SKILL["intermediate"])
-	var st := STYLE.get(style, STYLE["aggressive"])
+	var sk: Dictionary = SKILL.get(skill, SKILL["intermediate"])
+	var st: Dictionary = STYLE.get(style, STYLE["aggressive"])
 	return {
 		"skill": skill,
 		"style": style,
