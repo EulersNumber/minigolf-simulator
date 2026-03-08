@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://main001"]
+
+[ext_resource type="Script"       path="res://scripts/core/main.gd"      id="1_main"]
+[ext_resource type="PackedScene"  path="res://scenes/hole/hole_scene.tscn" id="2_hole"]
+[ext_resource type="PackedScene"  path="res://scenes/ui/hud.tscn"         id="3_hud"]
+[ext_resource type="PackedScene"  path="res://scenes/ui/sim_results.tscn" id="4_results"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="HoleScene" parent="." instance=ExtResource("2_hole")]
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="SimResults" parent="." instance=ExtResource("4_results")]

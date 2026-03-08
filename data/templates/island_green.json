@@ -1,0 +1,42 @@
+{
+	"name": "Island Green",
+	"par": 3,
+	"description": "A narrow bridge connects the tee to the island green. Miss the bridge and reset — precision required.",
+	"tee_position": [0.0, 0.15, 0.0],
+	"cup_position": [0.0, 0.05, 11.0],
+	"floor_segments": [
+		{
+			"center": [0.0, 0.0, 2.0],
+			"size": [2.5, 0.2, 4.0],
+			"rot_y": 0.0
+		},
+		{
+			"center": [0.0, 0.0, 5.5],
+			"size": [0.8, 0.2, 3.0],
+			"rot_y": 0.0
+		},
+		{
+			"center": [0.0, 0.0, 10.0],
+			"size": [3.0, 0.2, 4.0],
+			"rot_y": 0.0
+		}
+	],
+	"obstacles": [
+		{
+			"type": "wall",
+			"pos": [0.5, 0.25, 9.0],
+			"size": [0.2, 0.4, 1.0],
+			"rot_y": 30.0
+		}
+	],
+	"boundary_walls": [
+		{ "pos": [-1.325, 0.2, 2.0],  "size": [0.15, 0.4, 4.0], "rot_y": 0.0 },
+		{ "pos": [ 1.325, 0.2, 2.0],  "size": [0.15, 0.4, 4.0], "rot_y": 0.0 },
+		{ "pos": [-0.475, 0.2, 5.5],  "size": [0.15, 0.4, 3.0], "rot_y": 0.0 },
+		{ "pos": [ 0.475, 0.2, 5.5],  "size": [0.15, 0.4, 3.0], "rot_y": 0.0 },
+		{ "pos": [-1.575, 0.2, 10.0], "size": [0.15, 0.4, 4.0], "rot_y": 0.0 },
+		{ "pos": [ 1.575, 0.2, 10.0], "size": [0.15, 0.4, 4.0], "rot_y": 0.0 },
+		{ "pos": [0.0,    0.2, -0.075],  "size": [2.8,  0.4, 0.15], "rot_y": 0.0 },
+		{ "pos": [0.0,    0.2, 12.075],  "size": [3.3,  0.4, 0.15], "rot_y": 0.0 }
+	]
+}

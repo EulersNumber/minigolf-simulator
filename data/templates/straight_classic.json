@@ -1,0 +1,28 @@
+{
+	"name": "Straight Classic",
+	"par": 2,
+	"description": "A simple straight hole with one deflecting wall. Good baseline for testing bots.",
+	"tee_position": [0.0, 0.15, 0.0],
+	"cup_position": [0.0, 0.05, 10.0],
+	"floor_segments": [
+		{
+			"center": [0.0, 0.0, 5.0],
+			"size": [2.5, 0.2, 10.0],
+			"rot_y": 0.0
+		}
+	],
+	"obstacles": [
+		{
+			"type": "wall",
+			"pos": [0.6, 0.25, 5.5],
+			"size": [0.2, 0.4, 1.8],
+			"rot_y": 25.0
+		}
+	],
+	"boundary_walls": [
+		{ "pos": [-1.325, 0.2, 5.0],  "size": [0.15, 0.4, 10.0], "rot_y": 0.0 },
+		{ "pos": [ 1.325, 0.2, 5.0],  "size": [0.15, 0.4, 10.0], "rot_y": 0.0 },
+		{ "pos": [0.0,    0.2, -0.075], "size": [2.8,  0.4, 0.15], "rot_y": 0.0 },
+		{ "pos": [0.0,    0.2, 10.075], "size": [2.8,  0.4, 0.15], "rot_y": 0.0 }
+	]
+}

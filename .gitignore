@@ -1,0 +1,11 @@
+# Godot 4 generated files
+.godot/
+*.uid
+
+# User data (saves)
+# Keep templates (res://), ignore user:// saves
+# user:// maps to: ~/.local/share/godot/app_userdata/Minigolf Simulator/ on Linux
+
+# OS
+.DS_Store
+Thumbs.db
