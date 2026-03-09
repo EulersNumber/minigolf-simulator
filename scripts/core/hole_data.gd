@@ -49,6 +49,7 @@ static func from_dict(d: Dictionary) -> HoleData:
 			"center": _vec3(seg.get("center", [0, 0, 0])),
 			"size":   _vec3(seg.get("size",   [3, 0.2, 6])),
 			"rot_y":  float(seg.get("rot_y", 0.0)),
+			"rot_x":  float(seg.get("rot_x", 0.0)),
 		})
 
 	for obs in d.get("obstacles", []):

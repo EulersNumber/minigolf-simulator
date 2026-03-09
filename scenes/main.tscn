@@ -10,6 +10,7 @@
 script = ExtResource("1_main")
 
 [node name="HoleScene" parent="." unique_id=850834346 instance=ExtResource("2_hole")]
+transform = Transform3D(0.581663, -0.088021286, 0.8086534, -0.25710154, 0.9232706, 0.28542998, -0.77172995, -0.3739301, 0.51440203, 0.18971334, -0.29144928, -0.037734985)
 
 [node name="HUD" parent="." unique_id=1966607178 instance=ExtResource("3_hud")]
 

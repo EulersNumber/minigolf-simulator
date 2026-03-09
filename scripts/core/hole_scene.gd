@@ -35,8 +35,9 @@ func _ready() -> void:
 	_setup_environment()
 	_build_kill_plane()
 
-	overview_cam.current = true
-	follow_cam.current   = false
+	overview_cam.current = false
+	follow_cam.current   = true
+	_cam_mode            = 1
 
 func _process(delta: float) -> void:
 	if _cam_mode == 1 and ball_ctrl:

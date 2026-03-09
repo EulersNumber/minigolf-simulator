@@ -23,7 +23,7 @@ func _ready() -> void:
 	freeze_mode       = RigidBody3D.FREEZE_MODE_KINEMATIC
 	axis_lock_angular_x = true
 	axis_lock_angular_z = true
-	linear_damp       = 2.0   # rolling resistance on the green
+	linear_damp       = 1.2   # rolling resistance on the green
 	angular_damp      = 3.0
 
 func _physics_process(_delta: float) -> void:
