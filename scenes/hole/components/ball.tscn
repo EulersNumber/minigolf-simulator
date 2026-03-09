@@ -5,11 +5,14 @@
 [sub_resource type="SphereMesh" id="SphereMesh_001"]
 radius = 0.042
 height = 0.084
+radial_segments = 32
+rings = 16
 
 [sub_resource type="StandardMaterial3D" id="Mat_001"]
-albedo_color = Color(0.95, 0.95, 0.95, 1)
-roughness = 0.3
-metallic = 0.05
+albedo_color = Color(0.97, 0.97, 0.97, 1)
+roughness = 0.15
+metallic = 0.0
+metallic_specular = 0.8
 
 [sub_resource type="SphereShape3D" id="Shape_001"]
 radius = 0.042
@@ -17,7 +20,6 @@ radius = 0.042
 [node name="Ball" type="RigidBody3D"]
 script = ExtResource("1_ball")
 mass = 0.046
-physics_material_override = null
 continuous_cd = true
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
