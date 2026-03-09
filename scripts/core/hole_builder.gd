@@ -171,7 +171,7 @@ static func _build_palm(parent: Node3D, pos: Vector3, seed: int) -> void:
 	tree.position = pos
 
 	var rng := RandomNumberGenerator.new()
-	rng.seed = uint32(seed * 7919 + 13)
+	rng.seed = seed * 7919 + 13
 
 	# Trunk — tapered cylinder with slight lean
 	var trunk := MeshInstance3D.new()
@@ -264,7 +264,7 @@ static func _build_cliff_rocks(parent: Node3D) -> void:
 
 static func _rock_cluster(parent: Node3D, center: Vector3, seed: int) -> void:
 	var rng := RandomNumberGenerator.new()
-	rng.seed = uint32(seed * 3571 + 97)
+	rng.seed = seed * 3571 + 97
 	var count := 3 + seed % 3
 	for i in count:
 		var offset := Vector3(rng.randf_range(-0.6, 0.6), 0, rng.randf_range(-0.5, 0.5))
@@ -410,7 +410,7 @@ static func _rock_mat(index: int) -> StandardMaterial3D:
 		Color(0.15, 0.12, 0.09),
 		Color(0.20, 0.17, 0.13),
 	]
-	var color := shades[index % shades.size()]
+	var color: Color = shades[index % shades.size()]
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = color
 	mat.roughness    = 0.92
